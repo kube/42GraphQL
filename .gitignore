@@ -1,0 +1,5 @@
+/node_modules
+/typings
+/credentials.json
+/.vscode
+/dist

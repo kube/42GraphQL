@@ -1,0 +1,17 @@
+{
+  "name": "42api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node dist/test"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^2.0.1",
+    "form-data": "^1.0.1",
+    "isomorphic-fetch": "^2.2.1",
+    "promise": "^7.1.1"
+  }
+}
