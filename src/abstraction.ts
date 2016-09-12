@@ -1,3 +1,13 @@
+
+      /*#######.
+     ########",#:
+   #########',##".
+  ##'##'## .##',##.
+   ## ## ## # ##",#.
+    ## ## ## ## ##'
+     ## ## ## :##
+      ## ## ##*/
+
 import api from './api'
 import { IApiUser, IApiUsers } from './apiResponseFormat'
 import { IConfig } from './api'

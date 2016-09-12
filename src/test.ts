@@ -1,3 +1,13 @@
+
+      /*#######.
+     ########",#:
+   #########',##".
+  ##'##'## .##',##.
+   ## ## ## # ##",#.
+    ## ## ## ## ##'
+     ## ## ## :##
+      ## ## ##*/
+
 import config from './config'
 import api from './abstraction'
 import * as async from 'async'

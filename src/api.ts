@@ -1,3 +1,13 @@
+
+      /*#######.
+     ########",#:
+   #########',##".
+  ##'##'## .##',##.
+   ## ## ## # ##",#.
+    ## ## ## ## ##'
+     ## ## ## :##
+      ## ## ##*/
+
 import * as Promise from 'promise'
 import * as fetch from 'isomorphic-fetch'
 import * as FormData from 'form-data'
