@@ -10,32 +10,24 @@
 
 import config from './config'
 import api from './abstraction'
-import * as async from 'async'
 
 const { getUser, getUsers } = api(config)
 
 // A simple test
 
 getUsers()
-  .then(users => async.map(users, function (user, next) {
-
-    getUser(user.id)
-      .then(user => {
-        // Format user item
-        next(null, {
+  .then(users =>
+    Promise
+      .all(users.map(user => getUser(user.id)))
+      .then(users => {
+        let formattedData = users.map(user => ({
           login: user.login,
           fullName: user.first_name,
           firstName: user.first_name,
           lastName: user.last_name
-        })
-      })
-      .catch(err => {
-        next(err, null)
-      })
+        }))
 
-  }, function (err, users) {
-    if (err) {
-      throw err
-    }
-    console.log(users)
-  }))
+        console.log(formattedData)
+      })
+      .catch(err =>
+        console.error(err)))
