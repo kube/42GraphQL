@@ -4,6 +4,7 @@
     "outDir": "./dist",
     "module": "commonjs",
     "target": "es5",
+    "removeComments": true,
     "noImplicitAny": true,
     "sourceMap": true
   }
