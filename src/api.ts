@@ -13,11 +13,11 @@ import * as fetch from 'isomorphic-fetch'
 import * as FormData from 'form-data'
 
 export interface IConfig {
-  protocol: string
-  hostName: string
-  tokenURL: string
-  rootEndPoint: string
-  clientId: string
+  protocol: string,
+  hostName: string,
+  tokenURL: string,
+  rootEndPoint: string,
+  clientId: string,
   clientSecret: string
 }
 
