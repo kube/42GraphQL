@@ -31,7 +31,7 @@ export default function (config: any) {
   /**
    * Helper to create proper FormData for POST requests body
    */
-  function formData(body: { [key: string]: string }) {
+  const formData = (body: { [key: string]: string }) => {
     const form = new FormData()
     for (let key in body) {
       form.append(key, body[key])
@@ -42,9 +42,8 @@ export default function (config: any) {
   /**
    * Get API Access Token
    */
-  function getToken() {
-    return new Promise<String>((resolve, reject) => {
-
+  const getToken = () =>
+    new Promise<String>((resolve, reject) => {
       // If no token has been fetched, ask it to the server
       if (token === undefined) {
         fetch(apiToken, {
@@ -64,58 +63,49 @@ export default function (config: any) {
             else
               reject(new Error('No Access Token returned by server'))
           })
-          .catch(err => reject(err))
+          .catch(reject)
       }
       // If we already stored a token, return it
-      else {
+      else
         resolve(token)
-      }
     })
-  }
 
   /**
    * Perform a GET on API resource
    */
-  function get(endPoint: string) {
-
-    return new Promise((resolve, reject) => {
-
+  const get = (endPoint: string) =>
+    new Promise((resolve, reject) =>
       getToken()
-        .then(token => {
+        .then(token =>
           fetch(`${apiRoot}/${endPoint}`, {
             headers: {
               'Authorization': `Bearer ${token}`
             }
           })
-            .then(res => res.json())
-            .then(body => resolve(body))
-            .catch(err => reject(err))
-        })
-
-    })
-  }
+        )
+        .then(res => res.json())
+        .then(resolve)
+        .catch(reject)
+    )
 
   /**
    * Perform a POST on API resource
    */
-  function post(endPoint: string) {
-    return new Promise((resolve, reject) => {
-
+  const post = (endPoint: string) =>
+    new Promise((resolve, reject) =>
       getToken()
-        .then(token => {
+        .then(token =>
           fetch(`${apiRoot}/${endPoint}`, {
             method: 'POST',
             headers: {
               'Authorization': `Bearer ${token}`
             }
           })
-            .then(res => res.json())
-            .then(body => resolve(body))
-            .catch(err => reject(err))
-        })
-
-    })
-  }
+        )
+        .then(res => res.json())
+        .then(resolve)
+        .catch(reject)
+    )
 
   /**
    * Expose module

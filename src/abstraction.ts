@@ -15,13 +15,11 @@ import { IConfig } from './api'
 export default function (config: IConfig) {
   const { get, post } = api(config)
 
-  function getUsers(): Promise<IApiUsers>{
-    return get('users')
-  }
+  const getUsers = (): Promise<IApiUsers> =>
+    get('users')
 
-  function getUser(userId: number): Promise<IApiUser> {
-    return get(`users/${userId}`)
-  }
+  const getUser = (userId: number): Promise<IApiUser> =>
+    get(`users/${userId}`)
 
   /**
    * Expose Module
