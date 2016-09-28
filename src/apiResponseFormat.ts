@@ -8,13 +8,13 @@
      ## ## ## :##
       ## ## ##*/
 
-export interface IApiUsers extends Array<{
+export type ApiUsers = {
   id: number,
   login: string,
   url: string
-}> { }
+}[]
 
-export interface IApiUser {
+export type ApiUser = {
   id: number,
   email: string,
   login: string,

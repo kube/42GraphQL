@@ -1,9 +1,13 @@
 {
   "name": "42api",
-  "dependencies": {},
+  "dependencies": {
+    "express": "registry:npm/express#4.14.0+20160925001530"
+  },
   "globalDependencies": {
     "es6-promise": "registry:dt/es6-promise#0.0.0+20160614011821",
+    "express-graphql": "registry:dt/express-graphql#0.0.0+20160626095004",
     "form-data": "registry:dt/form-data#0.0.0+20160724024111",
+    "graphql": "github:nitintutlani/typed-graphql",
     "isomorphic-fetch": "registry:dt/isomorphic-fetch#0.0.0+20160830175641",
     "node": "registry:dt/node#6.0.0+20160907173219",
     "promise": "registry:dt/promise#7.1.1+20160602154553"

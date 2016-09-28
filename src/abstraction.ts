@@ -9,16 +9,16 @@
       ## ## ##*/
 
 import api from './api'
-import { IApiUser, IApiUsers } from './apiResponseFormat'
+import { ApiUser, ApiUsers } from './apiResponseFormat'
 import { IConfig } from './api'
 
 export default function (config: IConfig) {
   const { get, post } = api(config)
 
-  const getUsers = (): Promise<IApiUsers> =>
+  const getUsers = (): Promise<ApiUsers> =>
     get('users')
 
-  const getUser = (userId: number): Promise<IApiUser> =>
+  const getUser = (userId: number): Promise<ApiUser> =>
     get(`users/${userId}`)
 
   /**
