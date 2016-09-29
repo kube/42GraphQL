@@ -14,6 +14,20 @@ export type ApiUsers = {
   url: string
 }[]
 
+export type ApiUserProject = {
+  id: number,
+  occurrence: number,
+  final_mark: number,
+  status: string,
+  'validated?': boolean,
+  current_team_id: number,
+  project: {
+    id: number,
+    name: string,
+    slug: string
+  }
+}
+
 export type ApiUser = {
   id: number,
   email: string,
@@ -51,19 +65,7 @@ export type ApiUser = {
       slug: string
     }
   }[],
-  projects_users: {
-    id: number,
-    occurrence: number,
-    final_mark: number,
-    status: string,
-    'validated?': boolean,
-    current_team_id: number,
-    project: {
-      id: number,
-      name: string,
-      slug: string
-    }
-  }[],
+  projects_users: ApiUserProject[],
   achievements: {
     id: number,
     name: string,

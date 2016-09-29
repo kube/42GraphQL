@@ -13,54 +13,98 @@ import {
   GraphQLObjectType,
   GraphQLString,
   GraphQLBoolean,
-  GraphQLInt
+  GraphQLInt,
+  GraphQLList
 } from 'graphql'
 
+import {
+  ApiProject
+} from './ApiTypes/Project'
+
+import {
+  ApiUser
+} from './ApiTypes/User'
 
 import config from './config'
 import api from './abstraction'
-import { ApiUser } from './apiResponseFormat'
 
-const { getUser } = api(config)
+const { getUser, getUsers } = api(config)
 
+const ProjectType = new GraphQLObjectType<ApiProject>({
+  name: 'Project',
+  description: '...',
 
-const UserType = new GraphQLObjectType({
+  fields: () => ({
+    id: { type: GraphQLInt },
+    occurrence: { type: GraphQLInt },
+
+  })
+})
+
+const UserType = new GraphQLObjectType<ApiUser>({
   name: 'User',
   description: '...',
 
   fields: () => ({
-    id: { type: GraphQLString },
+    id: { type: GraphQLInt },
     login: { type: GraphQLString },
+
     firstName: {
       type: GraphQLString,
-      resolve: (user: ApiUser) => user.first_name
+      resolve: user => user.first_name
     },
     lastName: {
       type: GraphQLString,
-      resolve: (user: ApiUser) => user.last_name
+      resolve: user => user.last_name
     },
+
     url: { type: GraphQLString },
     phone: { type: GraphQLString },
     displayName: { type: GraphQLString },
     imageUrl: {
       type: GraphQLString,
-      resolve: (user: ApiUser) => user.image_url
+      resolve: user => user.image_url
     },
     isStaff: {
       type: GraphQLBoolean,
-      resolve: (user: ApiUser) => user['staff?']
+      resolve: user => user['staff?']
     },
     correctionPoints: {
       type: GraphQLInt,
-      resolve: (user: ApiUser) => user.correction_point
+      resolve: user => user.correction_point
     },
     poolMonth: {
       type: GraphQLString,
-      resolve: (user: ApiUser) => user.correction_point
+      resolve: user => user.correction_point
     },
     poolYear: {
       type: GraphQLString,
-      resolve: (user: ApiUser) => user.pool_year
+      resolve: user => user.pool_year
+    },
+    location: { type: GraphQLString },
+    wallet: { type: GraphQLInt },
+    //TODO: Add groups with correct Typing
+    //TODO: Add cursus_users
+
+    projects: {
+      type: new GraphQLObjectType({
+        name: 'User Projects',
+        description: 'Projects to which user subscribed',
+
+        fields: () => ({
+          id: { type: GraphQLInt },
+          occurence: { type: GraphQLInt },
+          finalMark: { type: GraphQLInt },
+          status: { type: GraphQLString },
+          validated: {
+            type: GraphQLBoolean,
+            resolve: (projects: any) => projects['validated?'],
+          },
+          currentTeamId: { type: GraphQLInt },
+          project: ProjectType
+        })
+      }),
+      resolve: user => user.projects_users
     }
   })
 })
@@ -73,9 +117,22 @@ const QueryType = new GraphQLObjectType({
     user: {
       type: UserType,
       args: {
-        id: { type: GraphQLString}
+        id: { type: GraphQLInt }
       },
-      resolve: (root, { id }) => getUser(id)
+      resolve: (root, args) => getUser(args['id'])
+    },
+
+    users: {
+      type: new GraphQLList(UserType),
+      args: {
+        page: { type: GraphQLInt }
+      },
+      resolve: (root, args) => getUsers(args['page'])
+        .then(users =>
+          Promise.all(users.map(user =>
+            getUser(user.id))
+          )
+        )
     }
   })
 })
