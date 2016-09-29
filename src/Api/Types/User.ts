@@ -8,13 +8,27 @@
      ## ## ## :##
       ## ## ##*/
 
-export interface IApiUsers extends Array<{
+export type ApiUsers = {
   id: number,
   login: string,
   url: string
-}> { }
+}[]
 
-export interface IApiUser {
+export type ApiUserProject = {
+  id: number,
+  occurrence: number,
+  final_mark: number,
+  status: string,
+  'validated?': boolean,
+  current_team_id: number,
+  project: {
+    id: number,
+    name: string,
+    slug: string
+  }
+}
+
+export type ApiUser = {
   id: number,
   email: string,
   login: string,
@@ -51,19 +65,7 @@ export interface IApiUser {
       slug: string
     }
   }[],
-  projects_users: {
-    id: number,
-    occurrence: number,
-    final_mark: number,
-    status: string,
-    'validated?': boolean,
-    current_team_id: number,
-    project: {
-      id: number,
-      name: string,
-      slug: string
-    }
-  }[],
+  projects_users: ApiUserProject[],
   achievements: {
     id: number,
     name: string,
