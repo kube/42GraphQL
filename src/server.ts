@@ -15,29 +15,30 @@ import { buildASTSchema, parse } from 'graphql'
 import config from './config'
 import api from './abstraction'
 
+
+import schema from './schema'
+
 const { getUsers } = api(config)
 
-const schema = buildASTSchema(parse(`
-  type User {
-    id: Int,
-    login: String,
-    url: String
-  }
+// const schema = buildASTSchema(parse(`
+//   type User {
+//     id: Int,
+//     login: String,
+//     url: String
+//   }
 
-  type Query {
-    users: [User]
-  }
-`))
+//   type Query {
+//     users(page: Int): [User]
+//   }
+// `))
 
-const root = {
-  users: () => getUsers()
-}
+
+
 
 const app = express()
 
 app.use('/graphql', graphqlHTTP({
   schema,
-  rootValue: root,
   graphiql: true
 }))
 

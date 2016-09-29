@@ -13,7 +13,7 @@ import api from './abstraction'
 
 const { getUser, getUsers } = api(config)
 
-getUsers()
+getUsers(3)
   .then(users =>
     Promise
       .all(users.map(user =>

@@ -15,8 +15,8 @@ import { IConfig } from './api'
 export default function (config: IConfig) {
   const { get, post } = api(config)
 
-  const getUsers = (): Promise<ApiUsers> =>
-    get('users')
+  const getUsers = (page: number): Promise<ApiUsers> =>
+    get(`users?page[number]=${page}`)
 
   const getUser = (userId: number): Promise<ApiUser> =>
     get(`users/${userId}`)
