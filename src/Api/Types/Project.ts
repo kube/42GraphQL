@@ -10,43 +10,43 @@
 
 export type ApiProjects = ApiProject[]
 
-export type ApiProjectShort = {
+type ApiProjectProject = {
   id: number,
   created_at: string,
   name: string,
   slug: string
 }
 
-export type ApiCursusShort = {
+type ApiProjectCursus = {
   id: number,
   created_at: string,
   name: string,
   slug: string
 }
 
-export type ApiSkillShort = {
+type ApiProjectSkill = {
   id: number,
   name: string,
   created_at: string
 }
 
-export type ApiTagShort = {
+type ApiProjectTag = {
   id: number,
   name: string
 }
 
-export type ApiScaleShort = {
+type ApiProjectScale = {
   id: number,
   correction_number: number,
   is_primary: boolean
 }
 
-export type ApiProjectUploadShort = {
+type ApiProjectUpload = {
   id: number,
   name: string,
 }
 
-export type ApiProjectSessionShort = {
+type ApiProjectProjectSession = {
   id: number,
   solo: boolean,
   begin_at: string,
@@ -61,8 +61,8 @@ export type ApiProjectSessionShort = {
   updated_at: string,
   max_people: number,
   is_subscriptable: boolean,
-  scales: ApiScaleShort[],
-  uploads: ApiProjectUploadShort[],
+  scales: ApiProjectScale[],
+  uploads: ApiProjectUpload[],
   team_behaviour: string,
 }
 
@@ -71,16 +71,16 @@ export type ApiProject = {
   name: string,
   slug: string,
   description: string,
-  parent: ApiProjectShort[],
-  children: ApiProjectShort[],
+  parent: ApiProjectProject,
+  children: ApiProjectProject[],
   objectives: string[],
   tier: number,
   attachments: any[],
   created_at: string,
   updated_at: string,
   exam: boolean,
-  cursus: ApiCursusShort[],
-  skills: ApiSkillShort[],
-  tags: ApiTagShort[],
-  project_sessions: ApiProjectSessionShort
+  cursus: ApiProjectCursus[],
+  skills: ApiProjectSkill[],
+  tags: ApiProjectTag[],
+  project_sessions: ApiProjectProjectSession
 }

@@ -8,7 +8,7 @@
      ## ## ## :##
       ## ## ##*/
 
-import { IConfig } from './api'
+import { IConfig } from './Api/api'
 
 const config: IConfig = {
   protocol: 'https',

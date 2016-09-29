@@ -12,13 +12,15 @@ import api from './api'
 
 import {
   ApiUser,
-  ApiUsers,
+  ApiUsers
+} from './Types/User'
+
+import {
   ApiProject,
   ApiProjects
-} from './ApiTypes'
+} from './Types/Project'
 
 import { IConfig } from './api'
-
 
 export default function (config: IConfig) {
   const { get, post } = api(config)
@@ -42,6 +44,8 @@ export default function (config: IConfig) {
     get,
     post,
     getUsers,
-    getUser
+    getUser,
+    getProject,
+    getProjects
   }
 }
