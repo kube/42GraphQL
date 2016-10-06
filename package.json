@@ -9,7 +9,7 @@
     "start": "node dist/server"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "express": "^4.14.0",
     "express-graphql": "^0.5.4",
