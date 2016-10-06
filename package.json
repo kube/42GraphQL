@@ -8,7 +8,7 @@
     "build": "tsc",
     "start": "node dist/server"
   },
-  "author": "",
+  "author": "Chris Feijoo",
   "license": "MIT",
   "dependencies": {
     "express": "^4.14.0",
