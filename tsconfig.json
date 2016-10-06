@@ -3,6 +3,7 @@
     "rootDir": "./src",
     "outDir": "./dist",
     "module": "commonjs",
+    "moduleResolution": "node",
     "target": "es6",
     "removeComments": true,
     "noImplicitAny": true,

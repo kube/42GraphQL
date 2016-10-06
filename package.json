@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "node dist/test"
+    "postinstall": "typings install",
+    "build": "tsc",
+    "start": "node dist/server"
   },
   "author": "",
   "license": "ISC",
@@ -13,7 +15,11 @@
     "express-graphql": "^0.5.4",
     "form-data": "^1.0.1",
     "graphql": "^0.7.0",
-    "isomorphic-fetch": "^2.2.1",
-    "promise": "^7.1.1"
+    "isomorphic-fetch": "^2.2.1"
+  },
+  "devDependencies": {
+    "@types/node": "^6.0.45",
+    "typescript": "^2.0.3",
+    "typings": "^1.4.0"
   }
 }
