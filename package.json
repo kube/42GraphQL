@@ -4,7 +4,6 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "postinstall": "typings install",
     "build": "tsc",
     "start": "node dist/server"
   },
