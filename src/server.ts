@@ -10,14 +10,15 @@
 
 import * as express from 'express'
 import * as graphqlHTTP from 'express-graphql'
-
 import schema from './Schema'
+
+const PORT = process.env['PORT'] || 4000
 
 express()
 .use('/graphql', graphqlHTTP({
   schema,
   graphiql: true
 }))
-.listen(4000, () =>
-  console.log('GraphQL 42 Api listening at localhost:4000')
+.listen(PORT, () =>
+  console.log(`42 GraphQL listening at port ${PORT}`)
 )
