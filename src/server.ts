@@ -15,7 +15,7 @@ import schema from './Schema'
 const PORT = process.env['PORT'] || 4000
 
 express()
-.use('/graphql', graphqlHTTP({
+.use('/', graphqlHTTP({
   schema,
   graphiql: true
 }))
