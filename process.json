@@ -1,0 +1,10 @@
+{
+  "apps": [
+    {
+      "name": "42GraphQL",
+      "script": "./dist/server.js",
+      "watch": true,
+      "instances": 4
+    }
+  ]
+}
