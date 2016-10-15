@@ -3,7 +3,10 @@
     {
       "name": "42GraphQL",
       "script": "./dist/server.js",
-      "instances": 4
+      "instances": 1,
+      "watch": [
+        "./dist"
+      ]
     }
   ]
 }

@@ -8,60 +8,51 @@
      ## ## ## :##
       ## ## ##*/
 
+//TODO: Remove this reference path when find a way to import style properly
+/// <reference path="../../node_modules/typed-graphql/graphql.d.ts" />
+
 import {
   GraphQLSchema,
   GraphQLObjectType,
   GraphQLString,
-  GraphQLBoolean,
   GraphQLInt,
   GraphQLList
 } from 'graphql'
 
-import api from '../Api'
-import config from '../config'
-const { getUser, getUsers, getProject, getProjects } = api(config)
 
-import { UserType } from './User'
-import { ProjectType } from './Project'
+import { fetchUsers, UserType } from './User'
+import { fetchProjects, ProjectType } from './Project'
+import formatArgs from '../formatArgs'
 
 const QueryType = new GraphQLObjectType({
   name: 'Query',
   description: '...',
 
   fields: () => ({
-    user: {
-      type: UserType,
-      args: {
-        id: { type: GraphQLInt }
-      },
-      resolve: (root, args) =>
-        getUser(args['id'])
-    },
-
     users: {
       type: new GraphQLList(UserType),
       args: {
-        page: { type: GraphQLInt }
+        page: { type: GraphQLInt },
+        sortBy: { type: new GraphQLList(GraphQLString) },
+        login: { type: GraphQLString }
       },
       resolve: (root, args) =>
-        getUsers(args['page'])
-          .then(users =>
-            Promise.all(users.map(user =>
-              getUser(user.id))
-            )
-          )
+        fetchUsers(formatArgs(args))
     },
 
     projects: {
       type: new GraphQLList(ProjectType),
       args: {
-        page: { type: GraphQLInt }
+        page: { type: GraphQLInt },
+        sortBy: { type: new GraphQLList(GraphQLString) }
       },
       resolve: (root, args) =>
-        getProjects(args['number'])
+        fetchProjects(formatArgs(args))
     }
   })
 })
+
+require('graphql-errors').maskErrors(QueryType)
 
 export default new GraphQLSchema({
   query: QueryType

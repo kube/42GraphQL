@@ -8,13 +8,9 @@
      ## ## ## :##
       ## ## ##*/
 
-import { IConfig } from './Api/api'
+import { Connection } from '42api'
 
-const config: IConfig = {
-  protocol: 'https',
-  hostName: 'api.intra.42.fr',
-  tokenURL: '/oauth/token',
-  rootEndPoint: '/v2',
+const config = {
   clientId: process.env['CLIENT_ID'],
   clientSecret: process.env['CLIENT_SERVER']
 }
@@ -29,4 +25,4 @@ if (!(config.clientId && config.clientSecret)) {
   config.clientSecret = credentials.secret
 }
 
-export default config
+export default new Connection(config.clientId, config.clientSecret)
