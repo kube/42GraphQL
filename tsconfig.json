@@ -7,6 +7,7 @@
     "target": "es6",
     "removeComments": true,
     "noImplicitAny": true,
+    "noUnusedLocals": true,
     "sourceMap": true
   }
 }
