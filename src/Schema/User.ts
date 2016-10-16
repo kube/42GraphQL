@@ -21,6 +21,7 @@ import Cache from '../Cache'
 
 import { Id, getUser, getUsers, ApiUser, QueryStringArgs } from '42api'
 import { fetchUserProject, UserProjectType } from './UserProject'
+import { fetchUserLocations, LocationType } from './Location'
 
 /**
  * Users cache as PlainUser with a TTL of 3 hours
@@ -109,7 +110,7 @@ export const fetchUser =
  * Fetch Users page from API, formatted as PlainUser array
  */
 export const fetchUsers =
-  (args?: QueryStringArgs): Promise<PlainUser[]> =>
+  (args?: QueryStringArgs) =>
     getUsers(connection, args)
       .then(users =>
         Promise.all(
@@ -147,6 +148,12 @@ export const UserType = new GraphQLObjectType<PlainUser>({
       resolve: user =>
         user.userProjects
           .map(fetchUserProject)
+    },
+
+    locations: {
+      type: new GraphQLList(LocationType),
+      resolve: user =>
+        fetchUserLocations(user.id)
     }
   })
 })

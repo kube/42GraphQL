@@ -10,7 +10,7 @@
   "author": "Chris Feijoo",
   "license": "MIT",
   "dependencies": {
-    "42api": "0.0.11",
+    "42api": "0.0.12",
     "@types/redis": "^0.12.32",
     "express": "^4.14.0",
     "express-graphql": "^0.5.4",
