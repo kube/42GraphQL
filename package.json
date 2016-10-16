@@ -11,12 +11,14 @@
   "license": "MIT",
   "dependencies": {
     "42api": "0.0.11",
+    "@types/redis": "^0.12.32",
     "express": "^4.14.0",
     "express-graphql": "^0.5.4",
     "form-data": "^1.0.1",
     "graphql": "^0.7.0",
     "graphql-errors": "^2.1.0",
     "isomorphic-fetch": "^2.2.1",
+    "redis": "^2.6.2",
     "when-switch": "0.0.1"
   },
   "devDependencies": {

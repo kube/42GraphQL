@@ -16,11 +16,15 @@ import {
 } from 'graphql'
 
 import connection from '../connection'
+import Cache from '../Cache'
 
 import { Id, getUserProject, getUserProjects, ApiUserProject } from '42api'
 import { fetchProject, ProjectType } from './Project'
 
-const userProjectsCache = new Map<Id, PlainUserProject>()
+/**
+ * UserProjects cache as PlainUserProject with a TTL of 30 minutes
+ */
+const userProjectsCache = new Cache<Id, PlainUserProject>('userProject', 60 * 30)
 
 /**
  * Plain UserProject type to be stored in cache
@@ -52,24 +56,17 @@ export const formatUserProject =
   )
 
 /**
- * Cache UserProject
- */
-export const cacheUserProject =
-  (userProject: PlainUserProject): PlainUserProject =>
-    userProjectsCache
-      .set(userProject.id, userProject)
-      .get(userProject.id)
-
-/**
  * Fetch a UserProject by its Id
  */
 export const fetchUserProject = (userProjectId: Id) =>
-  userProjectsCache.has(userProjectId) ?
-    userProjectsCache.get(userProjectId)
-    : getUserProject(connection, userProjectId)
-      .then(p => { console.log(p); return p })
-      .then(formatUserProject)
-      .then(cacheUserProject)
+  userProjectsCache.get(userProjectId)
+    .then(userProject => userProject ?
+      userProject : getUserProject(connection, userProjectId)
+        .then(formatUserProject)
+        .then(userProject =>
+          userProjectsCache.set(userProject.id, userProject)
+        )
+    )
 
 /**
  * Fetch all UserProjects of a User
@@ -79,7 +76,9 @@ export const fetchUserProjects = (userId: Id) =>
     .then(userProjects =>
       userProjects
         .map(formatUserProject)
-        .map(cacheUserProject)
+        .map(userProject =>
+          userProjectsCache.set(userProject.id, userProject)
+        )
     )
 
 /**

@@ -16,12 +16,14 @@ import {
 } from 'graphql'
 
 import connection from '../connection'
+import Cache from '../Cache'
+
 import { Id, getProject, getProjects, ApiProject, QueryStringArgs } from '42api'
 
 /**
- * Cache using a Map until implementation of Redis
+ * Projects cache as PlainProject with a TTL of 7 hours
  */
-const projectsCache = new Map<number, PlainProject>()
+const projectsCache = new Cache<Id, PlainProject>('project', 3600 * 7)
 
 /**
  * Plain Project type to be stored in cache
@@ -36,14 +38,6 @@ export type PlainProject = {
   objectives: string[],
   tier: number
 }
-
-/**
- * Store PlainProject in cache
- */
-const cacheProject = (project: PlainProject): PlainProject =>
-  projectsCache
-    .set(project.id, project)
-    .get(project.id)
 
 /**
  * Convert Raw ApiProject to PlainProject
@@ -66,13 +60,14 @@ const formatProject = (project: ApiProject): PlainProject => (
  */
 export const fetchProject =
   (projectId: number, args?: QueryStringArgs) =>
-    projectsCache.has(projectId) ?
-      Promise.resolve(
-        projectsCache.get(projectId)
+    projectsCache.get(projectId)
+      .then(project => project ?
+        project : getProject(connection, projectId, args)
+          .then(formatProject)
+          .then(project =>
+            projectsCache.set(project.id, project)
+          )
       )
-      : getProject(connection, projectId, args)
-        .then(formatProject)
-        .then(cacheProject)
 
 /**
  * Fetch Projects from API, formatted as PlainProject array
@@ -83,7 +78,9 @@ export const fetchProjects =
       .then(projects =>
         projects
           .map(formatProject)
-          .map(cacheProject)
+          .map(project =>
+            projectsCache.set(project.id, project)
+          )
       )
 
 /**

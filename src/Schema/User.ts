@@ -17,14 +17,15 @@ import {
 } from 'graphql'
 
 import connection from '../connection'
+import Cache from '../Cache'
 
 import { Id, getUser, getUsers, ApiUser, QueryStringArgs } from '42api'
 import { fetchUserProject, UserProjectType } from './UserProject'
 
 /**
- * Cache using a Map until implementation of Redis
+ * Users cache as PlainUser with a TTL of 3 hours
  */
-const usersCache = new Map<number, PlainUser>()
+const usersCache = new Cache<Id, PlainUser>('user', 3600 * 3)
 
 /**
  * Plain User type to be stored in cache
@@ -91,25 +92,18 @@ const formatUser = (user: ApiUser): PlainUser => (
 )
 
 /**
- * Store PlainUser in cache
- */
-const cacheUser = (user: PlainUser): PlainUser =>
-  usersCache
-    .set(user.id, user)
-    .get(user.id)
-
-/**
  * Fetch User formatted as PlainUser from cache or API
  */
 export const fetchUser =
   (userId: number, args?: QueryStringArgs) =>
-    usersCache.has(userId) ?
-      Promise.resolve(
-        usersCache.get(userId)
+    usersCache.get(userId)
+      .then(user => user ?
+        user : getUser(connection, userId, args)
+          .then(formatUser)
+          .then(user =>
+            usersCache.set(user.id, user)
+          )
       )
-      : getUser(connection, userId, args)
-        .then(formatUser)
-        .then(cacheUser)
 
 /**
  * Fetch Users page from API, formatted as PlainUser array
@@ -148,13 +142,13 @@ export const UserType = new GraphQLObjectType<PlainUser>({
     location: { type: GraphQLString },
     wallet: { type: GraphQLInt },
 
-    projects: {
+    userProjects: {
       type: new GraphQLList(UserProjectType),
-      resolve: user => {
-        console.log(user.userProjects)
-        return user.userProjects
+      resolve: user =>
+        user.userProjects
           .map(fetchUserProject)
-      }
     }
   })
 })
+
+require('graphql-errors').maskErrors(UserType)
