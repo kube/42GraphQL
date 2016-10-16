@@ -1,7 +1,12 @@
 {
   "apps": [
     {
-      "name": "42GraphQL",
+      "name": "42GraphQL-production",
+      "script": "./dist/server.js",
+      "instances": 4
+    },
+    {
+      "name": "42GraphQL-development",
       "script": "./dist/server.js",
       "instances": 1,
       "watch": [

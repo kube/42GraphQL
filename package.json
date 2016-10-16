@@ -4,7 +4,8 @@
   "description": "42 api GraphQL Façade",
   "scripts": {
     "build": "tsc",
-    "start": "node dist/server"
+    "start": "pm2 start process.json --only 42GraphQL-development",
+    "stop": "pm2 delete process.json"
   },
   "author": "Chris Feijoo",
   "license": "MIT",
