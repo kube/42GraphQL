@@ -1,8 +1,7 @@
 {
   "name": "42graphql",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "42 api GraphQL Façade",
   "scripts": {
     "build": "tsc",
     "start": "node dist/server"
