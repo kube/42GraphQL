@@ -113,10 +113,8 @@ export const fetchUsers =
   (args?: QueryStringArgs) =>
     getUsers(connection, args)
       .then(users =>
-        Promise.all(
-          users.map(user =>
-            fetchUser(user.id)
-          )
+        users.map(user =>
+          fetchUser(user.id)
         )
       )
 
