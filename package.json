@@ -18,8 +18,7 @@
     "graphql": "^0.7.0",
     "graphql-errors": "^2.1.0",
     "isomorphic-fetch": "^2.2.1",
-    "redis": "^2.6.2",
-    "when-switch": "0.0.1"
+    "redis": "^2.6.2"
   },
   "devDependencies": {
     "@types/express": "^4.0.33",
@@ -28,7 +27,6 @@
     "@types/isomorphic-fetch": "0.0.31",
     "@types/node": "^6.0.45",
     "typed-graphql": "git://github.com/kube/typed-graphql.git#master",
-    "typescript": "^2.0.3",
-    "typings": "^1.4.0"
+    "typescript": "^2.0.3"
   }
 }
