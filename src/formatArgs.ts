@@ -29,10 +29,12 @@ const formatArgs = (args: QueryArgs): QueryStringArgs => {
   Object.keys(args)
     .forEach(key =>
       key === 'page' ?
-        qsargs.page.number = args['page']
-        : key === 'sortBy' ?
-          qsargs.sort = [args['sortBy']]
-          : qsargs.filter[key] = args[key]
+        qsargs.page.number = args['page'] :
+        key === 'perPage' ?
+          qsargs.page.size = args['perPage'] :
+          key === 'sortBy' ?
+            qsargs.sort = [args['sortBy']] :
+            qsargs.filter[key] = args[key]
     )
   return qsargs
 }

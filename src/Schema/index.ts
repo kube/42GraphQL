@@ -33,6 +33,7 @@ const QueryType = new GraphQLObjectType({
       type: new GraphQLList(UserType),
       args: {
         page: { type: GraphQLInt },
+        perPage: { type: GraphQLInt },
         sortBy: { type: new GraphQLList(GraphQLString) },
         login: { type: GraphQLString }
       },
@@ -44,6 +45,7 @@ const QueryType = new GraphQLObjectType({
       type: new GraphQLList(ProjectType),
       args: {
         page: { type: GraphQLInt },
+        perPage: { type: GraphQLInt },
         sortBy: { type: new GraphQLList(GraphQLString) }
       },
       resolve: (root, args) =>
